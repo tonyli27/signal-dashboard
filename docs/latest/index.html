@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Signal Dashboard · v1 (Live Signal Family) — 2026-04-29</title>
+<style>
+:root {
+  --navy: #1F3B66;
+  --navy-deep: #122844;
+  --navy-light: #3F6BA8;
+  --gold: #C19A3E;
+  --gold-deep: #9C7B3D;
+  --gray-warm: #9A8E80;
+  --gray-warm-dark: #5C5147;
+  --pos: #1F6F3F;
+  --neg: #B8345B;
+  --bg: #fdfdfb;
+  --bg-soft: #f5f3ed;
+  --rule: #d9d4c8;
+  --rule-strong: #5C5147;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: "Inter", "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #232323;
+  background: var(--bg);
+  margin: 0;
+}
+.page { max-width: 1320px; margin: 0 auto; padding: 36px 44px 64px; }
+
+.masthead { border-bottom: 2px solid var(--navy); padding-bottom: 14px; margin-bottom: 22px; }
+.masthead .brand {
+  font-family: Georgia, "Times New Roman", "PingFang SC", serif;
+  font-size: 22px; letter-spacing: 0.04em; color: var(--navy);
+  text-transform: uppercase; font-weight: 600;
+}
+.masthead .subtitle { font-size: 13px; color: var(--gray-warm-dark); margin-top: 4px; }
+.masthead .meta-row {
+  display: flex; gap: 32px; margin-top: 14px;
+  font-size: 12px; color: var(--gray-warm-dark);
+  letter-spacing: 0.03em;
+}
+.masthead .meta-row span b { color: var(--navy-deep); font-weight: 600; }
+
+h1 {
+  font-family: Georgia, "PingFang SC", serif;
+  font-weight: 600; color: var(--navy); font-size: 24px;
+  border-bottom: 1px solid var(--rule); padding-bottom: 8px; margin: 8px 0 18px;
+}
+h2 {
+  font-family: Georgia, "PingFang SC", serif;
+  font-weight: 600; color: var(--navy); font-size: 17px;
+  margin: 32px 0 12px; padding-left: 10px; border-left: 3px solid var(--gold);
+}
+h3 { font-family: Georgia, "PingFang SC", serif; font-weight: 600;
+     font-size: 14px; color: var(--navy-deep);
+     margin: 22px 0 8px; }
+h4 { font-size: 13px; color: var(--navy-deep); margin: 14px 0 6px; }
+
+.nav {
+  margin: 12px 0 24px; font-size: 11.5px; letter-spacing: 0.06em;
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.nav a {
+  padding: 5px 12px; background: white; border: 1px solid var(--rule);
+  color: var(--navy); text-decoration: none; text-transform: uppercase;
+  font-weight: 500;
+}
+.nav a:hover { background: var(--bg-soft); border-color: var(--navy); }
+.nav a.active { background: var(--navy); color: white; border-color: var(--navy); }
+.nav .label { color: var(--gray-warm-dark); padding-right: 8px; align-self: center;
+              font-weight: 600; }
+
+img.chart { max-width: 100%; display: block; margin: 8px 0 22px;
+            border: 1px solid var(--rule); background: white; padding: 4px; }
+
+table { border-collapse: collapse; font-size: 13px; width: 100%;
+        margin: 10px 0 28px; background: white; }
+thead th {
+  border-top: 2px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+  padding: 8px 12px; text-align: left;
+  font-weight: 600; font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--navy-deep);
+}
+tbody td { padding: 7px 12px; border-bottom: 1px solid var(--rule); }
+tbody tr:hover { background: var(--bg-soft); }
+td.num { text-align: right; font-variant-numeric: tabular-nums;
+         font-family: "JetBrains Mono", "SF Mono", Consolas, monospace;
+         font-size: 12.5px; }
+td.sig { font-weight: 500; }
+td.sig a { color: var(--navy); text-decoration: none;
+           border-bottom: 1px dashed var(--rule); }
+td.sig a:hover { border-bottom: 1px solid var(--gold); }
+td.label { color: var(--gray-warm-dark); font-size: 12px; }
+.pos { color: var(--pos); }
+.neg { color: var(--neg); }
+.zero { color: var(--gray-warm); }
+
+.note {
+  background: var(--bg-soft); border-left: 3px solid var(--gold);
+  padding: 10px 16px; margin: 12px 0 22px; font-size: 13px;
+  color: var(--gray-warm-dark);
+}
+
+.placeholder-card {
+  border: 1px solid var(--rule); border-left: 3px solid var(--gray-warm);
+  background: white; padding: 12px 18px; margin: 8px 0; font-size: 13px;
+}
+.placeholder-card .name { font-weight: 600; color: var(--navy-deep); }
+.placeholder-card .reason { color: var(--gray-warm-dark); margin-top: 3px; }
+
+.validation-card {
+  border: 1px solid var(--rule); padding: 14px 18px; margin: 8px 0;
+  background: white; font-size: 13px; display: flex; gap: 24px; align-items: center;
+}
+.validation-card .pass { color: var(--pos); font-weight: 600; letter-spacing: 0.05em; }
+.validation-card .fail { color: var(--neg); font-weight: 600; letter-spacing: 0.05em; }
+.validation-card .signal { font-weight: 600; color: var(--navy-deep);
+                            font-family: "JetBrains Mono", Consolas, monospace; font-size: 12.5px; }
+.validation-card .stat { color: var(--gray-warm-dark);
+                          font-family: "JetBrains Mono", Consolas, monospace; font-size: 12px; }
+
+.section-tag {
+  display: inline-block; font-size: 10.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gold-deep); font-weight: 600;
+  margin-right: 6px;
+}
+
+.footer {
+  margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--rule);
+  color: var(--gray-warm-dark); font-size: 11px; letter-spacing: 0.04em;
+}
+.footer code { background: var(--bg-soft); padding: 1px 5px; border-radius: 2px; }
+</style>
+</head>
+<body><div class="page">
+
+<div class="masthead">
+  <div class="brand">5min BTC · 信号研究台 · v1</div>
+  <div class="subtitle">线上信号 + 替代候选每日回测，监测线上信号是否出现 alpha decay，并跟踪候选信号 OOS 表现是否值得切换。</div>
+  <div class="meta-row">
+    <span>报告日期 · <b>2026-04-29</b></span>
+    <span>Anchor 时刻 · <b>2026-04-27 05:49 UTC</b></span>
+    <span>OOS 切分 · <b>2026-03-30</b></span>
+    <span>有效信号 · <b>2 / 2</b></span>
+  </div>
+</div>
+
+<div class="nav"><span class="label">信号子页</span><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a> <a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a></div>
+
+<h2>累计 PnL 对比</h2>
+<h3>Gross PnL — 不扣手续费 / 滑点</h3>
+<img class="chart" src="gross_pnl_cumsum_comparison.png" alt="gross pnl comparison">
+
+<h3>Net PnL — 0.072 fee + 0.005 spread</h3>
+<img class="chart" src="net_pnl_cumsum_comparison.png" alt="net pnl comparison">
+
+<h2>分窗口指标（净 PnL 口径）</h2>
+<h3><span class="section-tag">指标</span>近 24 小时滚动</h3>
+<p class="meta">窗口：2026-04-26 05:49 → 2026-04-27 05:49 UTC</p>
+<table>
+<thead><tr>
+<th>信号</th><th>Sharpe</th><th>终值净 PnL</th>
+<th>进场市场</th><th>可评估市场</th><th>进场率</th>
+<th>胜率</th><th>Net ROT</th><th>Gross ROT</th><th>交易日数</th>
+</tr></thead>
+<tbody>
+<tr><td class="sig"><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a><br><span class="label">线上 · pnl_cumsum · TAG=$7,000 · Entry=14% · 跳过美东周末</span></td><td class="num">—</td><td class="num"><span class="pos">$0.22</span></td><td class="num">4</td><td class="num">289</td><td class="num">1.4%</td><td class="num">75.0%</td><td class="num"><span class="pos">0.0540</span></td><td class="num"><span class="pos">0.0750</span></td><td class="num">1</td></tr>
+<tr><td class="sig"><a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a><br><span class="label">TTE=1 confidence · conf=82% · Entry=7%</span></td><td class="num">-118.82</td><td class="num"><span class="neg">$-4.94</span></td><td class="num">69</td><td class="num">289</td><td class="num">23.9%</td><td class="num">59.4%</td><td class="num"><span class="neg">-0.0717</span></td><td class="num"><span class="neg">-0.0594</span></td><td class="num">2</td></tr>
+</tbody>
+</table>
+<h3><span class="section-tag">指标</span>近 7 日滚动</h3>
+<p class="meta">窗口：2026-04-20 → 2026-04-27 05:49 UTC</p>
+<table>
+<thead><tr>
+<th>信号</th><th>Sharpe</th><th>终值净 PnL</th>
+<th>进场市场</th><th>可评估市场</th><th>进场率</th>
+<th>胜率</th><th>Net ROT</th><th>Gross ROT</th><th>交易日数</th>
+</tr></thead>
+<tbody>
+<tr><td class="sig"><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a><br><span class="label">线上 · pnl_cumsum · TAG=$7,000 · Entry=14% · 跳过美东周末</span></td><td class="num">-0.56</td><td class="num"><span class="neg">$-0.32</span></td><td class="num">224</td><td class="num">2015</td><td class="num">11.1%</td><td class="num">65.6%</td><td class="num"><span class="neg">-0.0014</span></td><td class="num"><span class="pos">0.0194</span></td><td class="num">7</td></tr>
+<tr><td class="sig"><a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a><br><span class="label">TTE=1 confidence · conf=82% · Entry=7%</span></td><td class="num">0.67</td><td class="num"><span class="pos">$0.95</span></td><td class="num">510</td><td class="num">2015</td><td class="num">25.3%</td><td class="num">60.0%</td><td class="num"><span class="pos">0.0019</span></td><td class="num"><span class="pos">0.0169</span></td><td class="num">8</td></tr>
+</tbody>
+</table>
+<h3><span class="section-tag">指标</span>OOS 全样本</h3>
+<p class="meta">窗口：自 2026-03-30 起</p>
+<table>
+<thead><tr>
+<th>信号</th><th>Sharpe</th><th>终值净 PnL</th>
+<th>进场市场</th><th>可评估市场</th><th>进场率</th>
+<th>胜率</th><th>Net ROT</th><th>Gross ROT</th><th>交易日数</th>
+</tr></thead>
+<tbody>
+<tr><td class="sig"><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a><br><span class="label">线上 · pnl_cumsum · TAG=$7,000 · Entry=14% · 跳过美东周末</span></td><td class="num">4.08</td><td class="num"><span class="pos">$9.23</span></td><td class="num">687</td><td class="num">7526</td><td class="num">9.1%</td><td class="num">65.1%</td><td class="num"><span class="pos">0.0134</span></td><td class="num"><span class="pos">0.0342</span></td><td class="num">25</td></tr>
+<tr><td class="sig"><a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a><br><span class="label">TTE=1 confidence · conf=82% · Entry=7%</span></td><td class="num">5.32</td><td class="num"><span class="pos">$26.26</span></td><td class="num">1688</td><td class="num">7526</td><td class="num">22.4%</td><td class="num">58.1%</td><td class="num"><span class="pos">0.0156</span></td><td class="num"><span class="pos">0.0313</span></td><td class="num">29</td></tr>
+</tbody>
+</table>
+
+
+<h2>验证对照（与 grid_searching 原结果）</h2>
+<p class="meta">判定阈值：每日 net 差 ≤ $0.01  且  累计差 ÷ 累计净值 ≤ 0.5%</p>
+<div class="placeholder-card"><span class="name">验证对照</span><div class="reason">未生成 validation_report.json — run_all.py 时跳过了 _validate_against_original.py 步骤？</div></div>
+
+<h2>未生成的信号类型</h2>
+<p class="meta">所有信号类型均找到 validation 参数。</p>
+
+<div class="footer">
+generated by <code>generate_html.py</code> · 数据源 <code>output/2026-04-29/</code> 下各 signal 的 <code>per_trade_pnl.parquet</code> / <code>daily_pnl.parquet</code>
+</div>
+
+</div></body>
+</html>
