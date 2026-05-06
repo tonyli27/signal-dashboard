@@ -1,10 +1,11 @@
 {
-  "published_at_hkt": "2026-05-06T08:21:09+08:00",
+  "published_at_hkt": "2026-05-06T14:26:29+08:00",
   "source_date": "2026-05-06",
   "files": [
     "gross_pnl_cumsum_comparison.png",
     "index.html",
     "net_pnl_cumsum_comparison.png",
+    "online_pnl.html",
     "online_tag7k_entry14",
     "online_tag7k_entry14.html",
     "summary.csv",

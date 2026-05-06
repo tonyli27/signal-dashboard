@@ -27,8 +27,108 @@ body {
   color: #232323;
   background: var(--bg);
   margin: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+/* Left sidebar nav */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--bg-soft);
+  border-right: 1px solid var(--rule);
+  padding: 28px 18px 32px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  font-size: 13px;
+}
+.sidebar .brand-mini {
+  font-family: Georgia, "PingFang SC", serif;
+  font-weight: 600;
+  color: var(--navy);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.sidebar .brand-mini .date {
+  display: block;
+  font-size: 11px;
+  font-family: "JetBrains Mono", "SF Mono", Consolas, monospace;
+  color: var(--gray-warm-dark);
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+  text-transform: none;
+  font-weight: 500;
+}
+.sidebar .section {
+  margin-top: 20px;
+}
+.sidebar .section-title {
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+.sidebar a.nav-link {
+  display: block;
+  padding: 6px 10px;
+  color: var(--navy-deep);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  margin-bottom: 1px;
+  font-size: 12.5px;
+}
+.sidebar a.nav-link:hover {
+  background: white;
+  border-left-color: var(--gold);
+}
+.sidebar a.nav-link.active {
+  background: var(--navy);
+  color: white;
+  border-left-color: var(--gold);
+  font-weight: 600;
+}
+.sidebar a.nav-link.sub {
+  padding-left: 22px;
+  font-size: 11.5px;
+  position: relative;
+}
+.sidebar a.nav-link.sub::before {
+  content: "·";
+  position: absolute;
+  left: 12px;
+  color: var(--gray-warm);
+}
+.sidebar a.nav-link code {
+  font-family: "JetBrains Mono", "SF Mono", Consolas, monospace;
+  font-size: 10.5px;
+  background: transparent;
+}
+
+main.content {
+  flex: 1;
+  min-width: 0;
 }
 .page { max-width: 1320px; margin: 0 auto; padding: 36px 44px 64px; }
+
+@media (max-width: 900px) {
+  body { display: block; }
+  .sidebar {
+    width: 100%; height: auto; position: static;
+    border-right: none; border-bottom: 1px solid var(--rule);
+    padding: 16px 20px;
+  }
+  .sidebar .section { margin-top: 12px; }
+  .page { padding: 22px 20px 40px; }
+}
 
 .masthead { border-bottom: 2px solid var(--navy); padding-bottom: 14px; margin-bottom: 22px; }
 .masthead .brand {
@@ -136,20 +236,37 @@ td.label { color: var(--gray-warm-dark); font-size: 12px; }
 .footer code { background: var(--bg-soft); padding: 1px 5px; border-radius: 2px; }
 </style>
 </head>
-<body><div class="page">
+<body>
+<aside class="sidebar">
+  <div class="brand-mini">
+    Signal Dashboard
+    <span class="date">2026-05-06</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">线上实盘</div>
+    <a class="nav-link" href="online_pnl.html">BTC 实盘账户 PnL</a>
+  </div>
+
+  <div class="section">
+    <div class="section-title">线下回测</div>
+    <a class="nav-link active" href="index.html">总览（信号对比）</a>
+    <a class="nav-link sub" href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a>
+<a class="nav-link sub" href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a>
+  </div>
+</aside>
+<main class="content"><div class="page">
 
 <div class="masthead">
   <div class="brand">5min BTC · 信号研究台 · v1</div>
   <div class="subtitle">线上信号 + 替代候选每日回测，监测线上信号是否出现 alpha decay，并跟踪候选信号 OOS 表现是否值得切换。</div>
   <div class="meta-row">
     <span>报告日期 · <b>2026-05-06</b></span>
-    <span>Anchor 时刻 · <b>2026-05-04 20:14 UTC</b></span>
+    <span>Anchor 时刻 · <b>2026-05-06 03:39 UTC</b></span>
     <span>OOS 切分 · <b>2026-03-30</b></span>
     <span>有效信号 · <b>2 / 2</b></span>
   </div>
 </div>
-
-<div class="nav"><span class="label">信号子页</span><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a> <a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a></div>
 
 <h2>累计 PnL 对比</h2>
 <h3>Gross PnL — 不扣手续费 / 滑点</h3>
@@ -160,7 +277,7 @@ td.label { color: var(--gray-warm-dark); font-size: 12px; }
 
 <h2>分窗口指标（净 PnL 口径）</h2>
 <h3><span class="section-tag">指标</span>近 24 小时滚动</h3>
-<p class="meta">窗口：2026-05-03 20:14 → 2026-05-04 20:14 UTC</p>
+<p class="meta">窗口：2026-05-05 03:39 → 2026-05-06 03:39 UTC</p>
 <table>
 <thead><tr>
 <th>信号</th><th>Sharpe</th><th>终值净 PnL</th>
@@ -168,12 +285,12 @@ td.label { color: var(--gray-warm-dark); font-size: 12px; }
 <th>胜率</th><th>Net ROT</th><th>Gross ROT</th><th>交易日数</th>
 </tr></thead>
 <tbody>
-<tr><td class="sig"><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a><br><span class="label">线上 · pnl_cumsum · TAG=$7,000 · Entry=14% · 跳过美东周末</span></td><td class="num">—</td><td class="num"><span class="neg">$-0.98</span></td><td class="num">8</td><td class="num">620</td><td class="num">1.3%</td><td class="num">37.5%</td><td class="num"><span class="neg">-0.1231</span></td><td class="num"><span class="neg">-0.1106</span></td><td class="num">1</td></tr>
-<tr><td class="sig"><a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a><br><span class="label">TTE=1 confidence · conf=82% · Entry=7%</span></td><td class="num">-9.18</td><td class="num"><span class="neg">$-2.20</span></td><td class="num">133</td><td class="num">620</td><td class="num">21.5%</td><td class="num">81.2%</td><td class="num"><span class="neg">-0.0166</span></td><td class="num"><span class="neg">-0.0067</span></td><td class="num">2</td></tr>
+<tr><td class="sig"><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a><br><span class="label">线上 · pnl_cumsum · TAG=$7,000 · Entry=14% · 跳过美东周末</span></td><td class="num">-31.13</td><td class="num"><span class="neg">$-1.84</span></td><td class="num">29</td><td class="num">289</td><td class="num">10.0%</td><td class="num">51.7%</td><td class="num"><span class="neg">-0.0634</span></td><td class="num"><span class="neg">-0.0460</span></td><td class="num">2</td></tr>
+<tr><td class="sig"><a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a><br><span class="label">TTE=1 confidence · conf=82% · Entry=7%</span></td><td class="num">5.01</td><td class="num"><span class="pos">$1.31</span></td><td class="num">143</td><td class="num">289</td><td class="num">49.5%</td><td class="num">81.1%</td><td class="num"><span class="pos">0.0092</span></td><td class="num"><span class="pos">0.0205</span></td><td class="num">2</td></tr>
 </tbody>
 </table>
 <h3><span class="section-tag">指标</span>近 7 日滚动</h3>
-<p class="meta">窗口：2026-04-27 → 2026-05-04 20:14 UTC</p>
+<p class="meta">窗口：2026-04-29 → 2026-05-06 03:39 UTC</p>
 <table>
 <thead><tr>
 <th>信号</th><th>Sharpe</th><th>终值净 PnL</th>
@@ -181,8 +298,8 @@ td.label { color: var(--gray-warm-dark); font-size: 12px; }
 <th>胜率</th><th>Net ROT</th><th>Gross ROT</th><th>交易日数</th>
 </tr></thead>
 <tbody>
-<tr><td class="sig"><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a><br><span class="label">线上 · pnl_cumsum · TAG=$7,000 · Entry=14% · 跳过美东周末</span></td><td class="num">3.68</td><td class="num"><span class="pos">$3.49</span></td><td class="num">301</td><td class="num">2348</td><td class="num">12.8%</td><td class="num">67.8%</td><td class="num"><span class="pos">0.0116</span></td><td class="num"><span class="pos">0.0309</span></td><td class="num">7</td></tr>
-<tr><td class="sig"><a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a><br><span class="label">TTE=1 confidence · conf=82% · Entry=7%</span></td><td class="num">8.88</td><td class="num"><span class="pos">$8.76</span></td><td class="num">934</td><td class="num">2348</td><td class="num">39.8%</td><td class="num">74.1%</td><td class="num"><span class="pos">0.0094</span></td><td class="num"><span class="pos">0.0227</span></td><td class="num">8</td></tr>
+<tr><td class="sig"><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a><br><span class="label">线上 · pnl_cumsum · TAG=$7,000 · Entry=14% · 跳过美东周末</span></td><td class="num">-13.95</td><td class="num"><span class="neg">$-5.50</span></td><td class="num">210</td><td class="num">2017</td><td class="num">10.4%</td><td class="num">62.4%</td><td class="num"><span class="neg">-0.0262</span></td><td class="num"><span class="neg">-0.0083</span></td><td class="num">7</td></tr>
+<tr><td class="sig"><a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a><br><span class="label">TTE=1 confidence · conf=82% · Entry=7%</span></td><td class="num">8.88</td><td class="num"><span class="pos">$11.76</span></td><td class="num">1047</td><td class="num">2017</td><td class="num">51.9%</td><td class="num">75.4%</td><td class="num"><span class="pos">0.0112</span></td><td class="num"><span class="pos">0.0243</span></td><td class="num">8</td></tr>
 </tbody>
 </table>
 <h3><span class="section-tag">指标</span>OOS 全样本</h3>
@@ -194,8 +311,8 @@ td.label { color: var(--gray-warm-dark); font-size: 12px; }
 <th>胜率</th><th>Net ROT</th><th>Gross ROT</th><th>交易日数</th>
 </tr></thead>
 <tbody>
-<tr><td class="sig"><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a><br><span class="label">线上 · pnl_cumsum · TAG=$7,000 · Entry=14% · 跳过美东周末</span></td><td class="num">3.64</td><td class="num"><span class="pos">$11.04</span></td><td class="num">1026</td><td class="num">10048</td><td class="num">10.2%</td><td class="num">65.9%</td><td class="num"><span class="pos">0.0108</span></td><td class="num"><span class="pos">0.0310</span></td><td class="num">31</td></tr>
-<tr><td class="sig"><a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a><br><span class="label">TTE=1 confidence · conf=82% · Entry=7%</span></td><td class="num">6.04</td><td class="num"><span class="pos">$36.19</span></td><td class="num">3326</td><td class="num">10048</td><td class="num">33.1%</td><td class="num">71.6%</td><td class="num"><span class="pos">0.0109</span></td><td class="num"><span class="pos">0.0243</span></td><td class="num">36</td></tr>
+<tr><td class="sig"><a href="online_tag7k_entry14.html"><code>online_tag7k_entry14</code></a><br><span class="label">线上 · pnl_cumsum · TAG=$7,000 · Entry=14% · 跳过美东周末</span></td><td class="num">3.31</td><td class="num"><span class="pos">$10.39</span></td><td class="num">1060</td><td class="num">10094</td><td class="num">10.5%</td><td class="num">65.6%</td><td class="num"><span class="pos">0.0098</span></td><td class="num"><span class="pos">0.0300</span></td><td class="num">33</td></tr>
+<tr><td class="sig"><a href="tte1_conf82_entry07.html"><code>tte1_conf82_entry07</code></a><br><span class="label">TTE=1 confidence · conf=82% · Entry=7%</span></td><td class="num">7.74</td><td class="num"><span class="pos">$50.38</span></td><td class="num">3534</td><td class="num">10094</td><td class="num">35.0%</td><td class="num">72.3%</td><td class="num"><span class="pos">0.0143</span></td><td class="num"><span class="pos">0.0276</span></td><td class="num">38</td></tr>
 </tbody>
 </table>
 
@@ -204,5 +321,5 @@ td.label { color: var(--gray-warm-dark); font-size: 12px; }
 generated by <code>generate_html.py</code> · 数据源 <code>output/2026-05-06/</code> 下各 signal 的 <code>per_trade_pnl.parquet</code> / <code>daily_pnl.parquet</code>
 </div>
 
-</div></body>
+</div></main></body>
 </html>
