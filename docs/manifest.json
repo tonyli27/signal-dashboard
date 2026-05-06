@@ -1,5 +1,5 @@
 {
-  "published_at_hkt": "2026-05-06T14:26:29+08:00",
+  "published_at_hkt": "2026-05-06T17:29:01+08:00",
   "source_date": "2026-05-06",
   "files": [
     "gross_pnl_cumsum_comparison.png",
@@ -9,6 +9,9 @@
     "online_tag7k_entry14",
     "online_tag7k_entry14.html",
     "summary.csv",
+    "tieout_index.html",
+    "tieout_pnlcumsum.html",
+    "tieout_tte1min.html",
     "tte1_conf82_entry07",
     "tte1_conf82_entry07.html"
   ]
