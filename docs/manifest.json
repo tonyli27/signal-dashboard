@@ -1,7 +1,10 @@
 {
-  "published_at_hkt": "2026-05-14T08:32:57+08:00",
+  "published_at_hkt": "2026-05-14T15:14:43+08:00",
   "source_date": "2026-05-14",
   "files": [
+    "gap_decomposition.html",
+    "gap_decomposition_daily.png",
+    "gap_detail_charts",
     "gross_pnl_cumsum_comparison.png",
     "index.html",
     "net_pnl_cumsum_comparison.png",
